@@ -6,3 +6,10 @@ export enum searchParamNames {
   AVERAGE_SPEED_MIN = "averageSpeedMin",
   AVERAGE_SPEED_VALUE = "averageSpeedValue",
 };
+
+export enum FilterType {
+  None = "",
+  LessThan = "lessThan",
+  GreaterThan = "greaterThan",
+  Between = "between",
+}

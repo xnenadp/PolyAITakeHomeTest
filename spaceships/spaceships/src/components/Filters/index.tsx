@@ -9,7 +9,7 @@ interface Props {
   filters: FiltersType;
   setPulseLaser: (value?: boolean) => void;
   setColors: (colors: string[]) => void;
-  setAverageSpeed: (filter: { type: string; value: number | [number, number] }) => void;
+  setAverageSpeed: (filter: { type: string; value: [number, number] }) => void;
 }
 
 const Filters: FC<Props> = ({ filters, setPulseLaser, setColors, setAverageSpeed}) => {

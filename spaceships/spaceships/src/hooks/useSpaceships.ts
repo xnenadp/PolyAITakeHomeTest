@@ -1,19 +1,19 @@
 import { useState } from "react";
 import data from "@/assets/data.json";
 import { Spaceship } from "@/utils/types";
-import { searchParamNames } from "@/utils/constants";
+import { FilterType, searchParamNames } from "@/utils/constants";
 import { useRouter } from "next/router";
 
 export interface Filters {
   colors: string[];
   pulseLaser?: boolean;
-  averageSpeed?: { type: string; value: number | [number, number] };
+  averageSpeed: { type: FilterType; minValue: number; maxValue: number };
 }
 
-const defaultFilters = {
+const defaultFilters: Filters = {
   colors: [],
   pulseLaser: undefined,
-  averageSpeed: undefined,
+  averageSpeed: { type: FilterType.None, minValue: 0, maxValue: 0 },
 };
 
 const useSpaceships = () => {
@@ -46,17 +46,19 @@ const useSpaceships = () => {
     });
 
     // Filter by average speed
-    if (filters.averageSpeed) {
+    if (filters.averageSpeed.type !== FilterType.None) {
       newSpaceships = newSpaceships.filter((spaceship) => {
         const speed = spaceship.average_speed;
-        const { type, value } = filters.averageSpeed;
-        if (type === "lessThan") {
-          return speed < value;
-        } else if (type === "greaterThan") {
-          return speed > value;
-        } else if (type === "between" && Array.isArray(value)) {
-          return speed >= value[0] && speed <= value[1];
+        const { type, minValue, maxValue } = filters.averageSpeed;
+
+        if (type === FilterType.LessThan) {
+          return speed < maxValue;
+        } else if (type === FilterType.GreaterThan) {
+          return speed > minValue;
+        } else if (type === FilterType.Between) {
+          return speed >= minValue && speed <= maxValue;
         }
+
         return true;
       });
     }
@@ -67,18 +69,22 @@ const useSpaceships = () => {
   const setQueryParams = (filters: Filters) => {
     let params = new URLSearchParams();
 
-    params.set(searchParamNames.COLORS, filters.colors.join(","));
+    if (filters.colors !== undefined) {
+      params.set(searchParamNames.COLORS, filters.colors.join(","));
+    }
     if (filters.pulseLaser !== undefined) {
       params.set(searchParamNames.PULSE_LASER, filters.pulseLaser.toString());
     }
-    if (filters.averageSpeed?.type) {
-      const { type, value } = filters.averageSpeed;
+    if (filters.averageSpeed.type !== FilterType.None) {
+      const { type, minValue, maxValue } = filters.averageSpeed;
       params.set(searchParamNames.AVERAGE_SPEED_TYPE, type);
-      if (type === "between" && Array.isArray(value)) {
-        params.set(searchParamNames.AVERAGE_SPEED_MIN, value[0].toString());
-        params.set(searchParamNames.AVERAGE_SPEED_MAX, value[1].toString());
-      } else {
-        params.set(searchParamNames.AVERAGE_SPEED_VALUE, value.toString());
+      if (type === FilterType.Between) {
+        params.set(searchParamNames.AVERAGE_SPEED_MIN, minValue.toString());
+        params.set(searchParamNames.AVERAGE_SPEED_MAX, maxValue.toString());
+      } else if (type === FilterType.LessThan) {
+        params.set(searchParamNames.AVERAGE_SPEED_MAX, maxValue.toString());
+      } else if (type === FilterType.GreaterThan) {
+        params.set(searchParamNames.AVERAGE_SPEED_MIN, minValue.toString());
       }
     }
 
@@ -88,7 +94,7 @@ const useSpaceships = () => {
   const setColors = (colors: string[]) => {
     const newFilters = {
       ...filters,
-      colors: colors,
+      colors,
     };
     setFilters(newFilters);
     setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
@@ -98,17 +104,17 @@ const useSpaceships = () => {
   const setPulseLaser = (pulseLaser?: boolean) => {
     const newFilters = {
       ...filters,
-      pulseLaser: pulseLaser,
+      pulseLaser,
     };
     setFilters(newFilters);
     setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
     setQueryParams(newFilters);
   };
 
-  const setAverageSpeed = (averageSpeed?: { type: string; value: number | [number, number] }) => {
+  const setAverageSpeed = (averageSpeed: { type: FilterType; minValue: number; maxValue: number }) => {
     const newFilters = {
       ...filters,
-      averageSpeed: averageSpeed,
+      averageSpeed,
     };
     setFilters(newFilters);
     setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
