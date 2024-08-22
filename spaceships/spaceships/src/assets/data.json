@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Stellar Fury",
+    "colors": ["blue", "silver"],
+    "average_speed": 85,
+    "pulse_laser": true
+  },
+  {
+    "name": "Nebula Hawk",
+    "colors": ["red", "black"],
+    "average_speed": 150,
+    "pulse_laser": false
+  },
+  {
+    "name": "Cosmic Voyager",
+    "colors": ["green", "yellow"],
+    "average_speed": 60,
+    "pulse_laser": true
+  },
+  {
+    "name": "Starfire Phoenix",
+    "colors": ["yellow", "blue"],
+    "average_speed": 100,
+    "pulse_laser": true
+  },
+  {
+    "name": "Galactic Eclipse",
+    "colors": ["purple", "silver"],
+    "average_speed": 190,
+    "pulse_laser": false
+  },
+  {
+    "name": "Interstellar Shadow",
+    "colors": ["black", "gray"],
+    "average_speed": 75,
+    "pulse_laser": true
+  },
+  {
+    "name": "Orion Starblade",
+    "colors": ["blue", "silver"],
+    "average_speed": 130,
+    "pulse_laser": true
+  },
+  {
+    "name": "Solar Flare",
+    "colors": ["orange", "yellow"],
+    "average_speed": 175,
+    "pulse_laser": false
+  },
+  {
+    "name": "Celestial Fury",
+    "colors": ["red", "orange"],
+    "average_speed": 50,
+    "pulse_laser": true
+  },
+  {
+    "name": "Nova Horizon",
+    "colors": ["green", "blue"],
+    "average_speed": 115,
+    "pulse_laser": true
+  },
+  {
+    "name": "Infinity Raider",
+    "colors": ["purple", "black"],
+    "average_speed": 195,
+    "pulse_laser": true
+  },
+  {
+    "name": "Ethereal Serenity",
+    "colors": ["blue", "silver"],
+    "average_speed": 80,
+    "pulse_laser": false
+  },
+  {
+    "name": "Quantum Phoenix",
+    "colors": ["red", "orange"],
+    "average_speed": 200,
+    "pulse_laser": true
+  },
+  {
+    "name": "Cosmos Explorer",
+    "colors": ["green", "blue"],
+    "average_speed": 80,
+    "pulse_laser": false
+  },
+  {
+    "name": "Astral Sentinel",
+    "colors": ["yellow", "silver"],
+    "average_speed": 90,
+    "pulse_laser": true
+  },
+  {
+    "name": "Supernova Seeker",
+    "colors": ["purple", "blue"],
+    "average_speed": 140,
+    "pulse_laser": false
+  },
+  {
+    "name": "Lunar Eclipse",
+    "colors": ["black", "gray"],
+    "average_speed": 160,
+    "pulse_laser": true
+  },
+  {
+    "name": "Solaris Storm",
+    "colors": ["orange", "red"],
+    "average_speed": 195,
+    "pulse_laser": false
+  },
+  {
+    "name": "Dark Matter",
+    "colors": ["black", "purple"],
+    "average_speed": 55,
+    "pulse_laser": true
+  },
+  {
+    "name": "Galactic Aurora",
+    "colors": ["blue", "green"],
+    "average_speed": 145,
+    "pulse_laser": true
+  }
+]
