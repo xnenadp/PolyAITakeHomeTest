@@ -4,7 +4,7 @@ import { Title } from "@/styles/styles";
 import useSpaceships from "@/hooks/useSpaceships";
 
 function Home() {
-  const { spaceships, filters, setColors, setPulseLaser } = useSpaceships();
+  const { spaceships, filters, setColors, setPulseLaser, setAverageSpeed } = useSpaceships();
 
   return (
     <main>
@@ -13,6 +13,7 @@ function Home() {
         filters={filters}
         setColors={setColors}
         setPulseLaser={setPulseLaser}
+        setAverageSpeed={setAverageSpeed}
       />
       <SpaceshipsTable rows={spaceships} />
     </main>
