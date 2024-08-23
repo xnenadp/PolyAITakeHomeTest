@@ -10,11 +10,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import { Spaceship } from "@/components/SpaceshipsTable/types";
 import { ColorTileContainer, ColorTile, SpaceshipsTableContainer } from "@/components/SpaceshipsTable/SpaceshipsTable.styled";
 
-interface Props {
+interface SpaceshipsTableProps {
   rows: Spaceship[];
 }
 
-export const SpaceshipsTable: FC<Props> = ({ rows }) => (
+export const SpaceshipsTable: FC<SpaceshipsTableProps> = ({ rows }) => (
   <SpaceshipsTableContainer>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

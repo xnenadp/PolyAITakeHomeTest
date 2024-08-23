@@ -2,12 +2,12 @@ import { FC } from "react";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FilterContainer } from "@/components/SearchFilters";
 
-interface Props {
+interface PulseLaserFilterProps {
   value?: boolean;
   onChange: (value?: boolean) => void;
 }
 
-export const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
+export const PulseLaserFilter: FC<PulseLaserFilterProps> = ({ value, onChange }) => {
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     onChange(newValue === "" ? undefined : newValue === "true");

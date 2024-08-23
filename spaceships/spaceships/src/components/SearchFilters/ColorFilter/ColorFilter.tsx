@@ -3,12 +3,12 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FilterContainer } from "@/components/SearchFilters";
 import { colors } from "@/components/SearchFilters/ColorFilter/constants";
 
-interface Props {
+interface ColorFilterProps {
   value: string[];
   onChange: (colors: string[]) => void;
 }
 
-export const ColorFilter: FC<Props> = ({ value, onChange }) => {
+export const ColorFilter: FC<ColorFilterProps> = ({ value, onChange }) => {
   const handleChange = (e: SelectChangeEvent<string[]>) => {
     const { value } = e.target;
     onChange(Array.isArray(value) ? value : value.split(","));
