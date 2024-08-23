@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { Fields, FilterContainer, FormLabel, Input, MinMaxContainer, Select, Type } from "@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter.styled";
 import { AverageSpeedFilterValue, FilterTypeEnum } from "@/components/SearchFilters/types";
 
@@ -15,21 +15,21 @@ enum FilterFieldEnum {
 export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChange }) => {
   const [filter, setFilter] = useState<AverageSpeedFilterValue>(value);
 
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value as FilterTypeEnum;
     const updatedFilter = { ...filter, type: newType };
     setFilter(updatedFilter);
     onChange(updatedFilter);
-  };
+  }, [filter.type, onChange]);
 
-  const handleValueChange = (field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = useCallback((field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     if (!isNaN(newValue)) {
-      const updatedFilter = { ...filter, [field]: newValue };
-      setFilter(updatedFilter);
-      onChange(updatedFilter);
-    }
-  };
+    const updatedFilter = { ...filter, [field]: newValue };
+    setFilter(updatedFilter);
+    onChange(updatedFilter);
+  }
+  }, [filter.maxValue, filter.minValue, onChange]);
 
   const renderMinMaxFields = useMemo(() => {
     if (filter.type === FilterTypeEnum.Between) {
