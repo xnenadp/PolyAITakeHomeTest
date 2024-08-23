@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TableContainer = styled.div`
+export const SpaceshipsTableContainer = styled.div`
   padding: 32px;
 `;
 

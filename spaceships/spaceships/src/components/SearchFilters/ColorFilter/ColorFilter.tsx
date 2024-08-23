@@ -1,18 +1,7 @@
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import * as Styled from "../SearchFilters.styled";
 import { FC } from "react";
-
-const colors = [
-  { label: "Blue", value: "blue" },
-  { label: "Silver", value: "silver" },
-  { label: "Red", value: "red" },
-  { label: "Black", value: "black" },
-  { label: "Green", value: "green" },
-  { label: "Yellow", value: "yellow" },
-  { label: "Purple", value: "purple" },
-  { label: "Gray", value: "gray" },
-  { label: "Orange", value: "orange" },
-];
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FilterContainer } from "@/components/SearchFilters";
+import { colors } from "@/components/SearchFilters/ColorFilter/constants";
 
 interface Props {
   value: string[];
@@ -26,7 +15,7 @@ export const ColorFilter: FC<Props> = ({ value, onChange }) => {
   };
 
   return (
-    <Styled.FilterContainer>
+    <FilterContainer>
       <InputLabel id="color-filter-label">Color</InputLabel>
       <Select
         labelId="color-filter-label"
@@ -35,16 +24,16 @@ export const ColorFilter: FC<Props> = ({ value, onChange }) => {
         onChange={handleChange}
         sx={{ width: "200px", height: "40px" }}
       >
-        {colors.map((color) => (
+        {colors.map(({ value, label }) => (
           <MenuItem
-            key={color.value}
-            value={color.value}
-            sx={{ color: color.value }}
+            key={value}
+            value={value}
+            sx={{ color: value }}
           >
-            {color.label}
+            {label}
           </MenuItem>
         ))}
       </Select>
-    </Styled.FilterContainer>
+    </FilterContainer>
   );
 };

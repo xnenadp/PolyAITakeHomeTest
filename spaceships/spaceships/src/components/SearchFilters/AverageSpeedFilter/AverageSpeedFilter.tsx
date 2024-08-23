@@ -1,13 +1,13 @@
 import { FC, useMemo, useState } from "react";
 import { Fields, FilterContainer, FormLabel, Input, MinMaxContainer, Select, Type } from "@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter.styled";
-import { AverageSpeedFilterValue, FilterType } from "@/components/SearchFilters/types";
+import { AverageSpeedFilterValue, FilterTypeEnum } from "@/components/SearchFilters/types";
 
 interface AverageSpeedFilterProps {
   value: AverageSpeedFilterValue;
   onChange: (filter: AverageSpeedFilterValue) => void;
 }
 
-enum FilterField {
+enum FilterFieldEnum {
   Min = "minValue",
   Max = "maxValue",
 }
@@ -16,13 +16,13 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
   const [filter, setFilter] = useState<AverageSpeedFilterValue>(value);
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newType = e.target.value as FilterType;
+    const newType = e.target.value as FilterTypeEnum;
     const updatedFilter = { ...filter, type: newType };
     setFilter(updatedFilter);
     onChange(updatedFilter);
   };
 
-  const handleValueChange = (field: FilterField) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValueChange = (field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     if (!isNaN(newValue)) {
       const updatedFilter = { ...filter, [field]: newValue };
@@ -32,28 +32,28 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
   };
 
   const renderMinMaxFields = useMemo(() => {
-    if (filter.type === FilterType.Between) {
+    if (filter.type === FilterTypeEnum.Between) {
       return (
         <MinMaxContainer>
-            <FormLabel htmlFor="minSpeed">Min</FormLabel>
-            <Input
-              id="minSpeed"
-              type="number"
-              value={filter.minValue}
-              onChange={handleValueChange(FilterField.Min)}
-            />
-            <FormLabel htmlFor="maxSpeed">Max</FormLabel>
-            <Input
-              id="maxSpeed"
-              type="number"
-              value={filter.maxValue}
-              onChange={handleValueChange(FilterField.Max)}
-            />
+          <FormLabel htmlFor="minSpeed">Min</FormLabel>
+          <Input
+            id="minSpeed"
+            type="number"
+            value={filter.minValue}
+            onChange={handleValueChange(FilterFieldEnum.Min)}
+          />
+          <FormLabel htmlFor="maxSpeed">Max</FormLabel>
+          <Input
+            id="maxSpeed"
+            type="number"
+            value={filter.maxValue}
+            onChange={handleValueChange(FilterFieldEnum.Max)}
+          />
         </MinMaxContainer>
       );
     }
 
-    const isLessThan = filter.type === FilterType.LessThan;
+    const isLessThan = filter.type === FilterTypeEnum.LessThan;
     return (
       <>
         <FormLabel htmlFor={isLessThan ? "maxSpeed" : "minSpeed"}>
@@ -63,7 +63,7 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
           id={isLessThan ? "maxSpeed" : "minSpeed"}
           type="number"
           value={isLessThan ? filter.maxValue : filter.minValue}
-          onChange={handleValueChange(isLessThan ? FilterField.Max : FilterField.Min)}
+          onChange={handleValueChange(isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min)}
         />
       </>
     );
@@ -78,14 +78,14 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
           value={filter.type}
           onChange={handleTypeChange}
         >
-          <option hidden value={FilterType.None}></option>
-          <option value={FilterType.None}>None</option>
-          <option value={FilterType.LessThan}>Less Than</option>
-          <option value={FilterType.GreaterThan}>Greater Than</option>
-          <option value={FilterType.Between}>Between</option>
+          <option hidden value={FilterTypeEnum.None}></option>
+          <option value={FilterTypeEnum.None}>None</option>
+          <option value={FilterTypeEnum.LessThan}>Less Than</option>
+          <option value={FilterTypeEnum.GreaterThan}>Greater Than</option>
+          <option value={FilterTypeEnum.Between}>Between</option>
         </Select>
       </Type>
-      {filter.type !== FilterType.None && <Fields>{renderMinMaxFields}</Fields>}
+      {filter.type !== FilterTypeEnum.None && <Fields>{renderMinMaxFields}</Fields>}
     </FilterContainer>
   );
 };

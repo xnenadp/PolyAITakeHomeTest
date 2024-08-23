@@ -1,6 +1,6 @@
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FC } from "react";
-import * as Styled from "../SearchFilters.styled";
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FilterContainer } from "@/components/SearchFilters";
 
 interface Props {
   value?: boolean;
@@ -16,7 +16,7 @@ export const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
   const val = value === undefined ? "" : value.toString();
 
   return (
-    <Styled.FilterContainer>
+    <FilterContainer>
       <InputLabel id="pulse-laser-label">Pulse Laser</InputLabel>
       <Select
         labelId="pulse-laser-label"
@@ -28,6 +28,6 @@ export const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
         <MenuItem value="true">Yes</MenuItem>
         <MenuItem value="false">No</MenuItem>
       </Select>
-    </Styled.FilterContainer>
+    </FilterContainer>
   );
 };

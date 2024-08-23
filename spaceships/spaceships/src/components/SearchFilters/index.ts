@@ -1,5 +1,5 @@
-export { SearchFilters } from './SearchFilters';
-export { AverageSpeedFilter } from './AverageSpeedFilter/AverageSpeedFilter';
-export { ColorFilter } from './ColorFilter/ColorFilter';
-export { PulseLaserFilter } from './PulseLaserFilter/PulseLaserFilter';
-export { FilterContainer, FiltersContainer } from "./SearchFilters.styled"
+export { SearchFilters } from '@/components/SearchFilters/SearchFilters';
+export { AverageSpeedFilter } from '@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter';
+export { ColorFilter } from '@/components/SearchFilters/ColorFilter/ColorFilter';
+export { PulseLaserFilter } from '@/components/SearchFilters/PulseLaserFilter/PulseLaserFilter';
+export { FilterContainer, FiltersContainer } from "@/components/SearchFilters/SearchFilters.styled"

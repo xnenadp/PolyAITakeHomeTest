@@ -10,9 +10,9 @@ interface Props {
 }
 
 export const SearchFilters: FC<Props> = ({ filters, setPulseLaser, setColors, setAverageSpeed }) => (
-    <FiltersContainer>
-      <ColorFilter value={filters.colors} onChange={setColors} />
-      <PulseLaserFilter value={filters.pulseLaser} onChange={setPulseLaser} />
-      <AverageSpeedFilter value={filters.averageSpeed} onChange={setAverageSpeed} />
-    </FiltersContainer>
+  <FiltersContainer>
+    <ColorFilter value={filters.colors} onChange={setColors} />
+    <PulseLaserFilter value={filters.pulseLaser} onChange={setPulseLaser} />
+    <AverageSpeedFilter value={filters.averageSpeed} onChange={setAverageSpeed} />
+  </FiltersContainer>
 );

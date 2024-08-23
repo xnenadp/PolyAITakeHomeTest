@@ -1,1 +1,1 @@
-export { default } from './SpaceshipsTable';
+export { SpaceshipsTable } from '@/components/SpaceshipsTable/SpaceshipsTable';
