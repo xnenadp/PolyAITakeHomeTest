@@ -1,5 +1,5 @@
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import * as Styled from "./Filters.styled";
+import * as Styled from "../Filters.styled";
 import { FC } from "react";
 
 const colors = [
@@ -21,21 +21,19 @@ interface Props {
 
 const ColorFilter: FC<Props> = ({ value, onChange }) => {
   const handleChange = (e: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = e;
-    onChange(typeof value === "string" ? value.split(",") : value);
+    const { value } = e.target;
+    onChange(Array.isArray(value) ? value : value.split(","));
   };
 
   return (
     <Styled.FilterContainer>
-      <InputLabel id="color-filter-label">Colour</InputLabel>
+      <InputLabel id="color-filter-label">Color</InputLabel>
       <Select
         labelId="color-filter-label"
-        sx={{ width: "200px" }}
         multiple
         value={value}
         onChange={handleChange}
+        sx={{ width: "200px", height: "40px" }}
       >
         {colors.map((color) => (
           <MenuItem

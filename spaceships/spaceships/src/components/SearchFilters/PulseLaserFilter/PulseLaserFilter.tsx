@@ -1,6 +1,6 @@
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { FC, useMemo } from "react";
-import * as Styled from "./Filters.styled";
+import { FC } from "react";
+import * as Styled from "../Filters.styled";
 
 interface Props {
   value?: boolean;
@@ -8,30 +8,19 @@ interface Props {
 }
 
 const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
-  const handleChange = (e: SelectChangeEvent) => {
-    let val;
-    if (e.target.value === "") {
-      val = undefined;
-    } else {
-      val = e.target.value === "true";
-    }
-    onChange(val);
+  const handleChange = (e: SelectChangeEvent<string>) => {
+    const newValue = e.target.value;
+    onChange(newValue === "" ? undefined : newValue === "true");
   };
 
-  const val = useMemo(() => {
-    if (value === undefined) {
-      return "";
-    } else {
-      return value.toString();
-    }
-  }, [value]);
+  const val = value === undefined ? "" : value.toString();
 
   return (
     <Styled.FilterContainer>
       <InputLabel id="pulse-laser-label">Pulse Laser</InputLabel>
       <Select
         labelId="pulse-laser-label"
-        sx={{ width: "200px" }}
+        sx={{ width: "200px", height: "40px" }}
         onChange={handleChange}
         value={val}
       >

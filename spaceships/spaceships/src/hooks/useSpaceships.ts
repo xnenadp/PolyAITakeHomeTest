@@ -1,14 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "@/assets/data.json";
-import { Spaceship } from "@/utils/types";
+import { Filters, Spaceship } from "@/utils/types";
 import { FilterType, searchParamNames } from "@/utils/constants";
 import { useRouter } from "next/router";
-
-export interface Filters {
-  colors: string[];
-  pulseLaser?: boolean;
-  averageSpeed: { type: FilterType; minValue: number; maxValue: number };
-}
 
 const defaultFilters: Filters = {
   colors: [],
@@ -69,7 +63,7 @@ const useSpaceships = () => {
   const setQueryParams = (filters: Filters) => {
     let params = new URLSearchParams();
 
-    if (filters.colors !== undefined) {
+    if (filters.colors.length) {
       params.set(searchParamNames.COLORS, filters.colors.join(","));
     }
     if (filters.pulseLaser !== undefined) {
@@ -97,7 +91,6 @@ const useSpaceships = () => {
       colors,
     };
     setFilters(newFilters);
-    setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
     setQueryParams(newFilters);
   };
 
@@ -107,7 +100,6 @@ const useSpaceships = () => {
       pulseLaser,
     };
     setFilters(newFilters);
-    setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
     setQueryParams(newFilters);
   };
 
@@ -117,9 +109,39 @@ const useSpaceships = () => {
       averageSpeed,
     };
     setFilters(newFilters);
-    setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
     setQueryParams(newFilters);
   };
+
+  useEffect(() => {
+    const { colors, pulseLaser, averageSpeedType, averageSpeedMin, averageSpeedMax } = router.query;
+
+    const newFilters: Filters = { ...defaultFilters };
+
+    if (colors) {
+      newFilters.colors = (colors as string).split(",");
+    }
+    if (pulseLaser) {
+      newFilters.pulseLaser = pulseLaser === "true";
+    }
+    if (averageSpeedType) {
+      newFilters.averageSpeed.type = averageSpeedType as FilterType;
+      if (averageSpeedMin && averageSpeedMax) {
+        newFilters.averageSpeed.minValue = parseFloat(averageSpeedMin as string);
+        newFilters.averageSpeed.maxValue = parseFloat(averageSpeedMax as string);
+      } else if (averageSpeedMin) {
+        newFilters.averageSpeed.minValue = parseFloat(averageSpeedMin as string);
+        newFilters.averageSpeed.type = FilterType.GreaterThan;
+      } else if (averageSpeedMax) {
+        newFilters.averageSpeed.maxValue = parseFloat(averageSpeedMax as string);
+        newFilters.averageSpeed.type = FilterType.LessThan;
+      }
+    } else {
+      newFilters.averageSpeed.type = FilterType.None;
+    }
+
+    setFilters(newFilters);
+    setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
+  }, [router.query]);
 
   return {
     spaceships,

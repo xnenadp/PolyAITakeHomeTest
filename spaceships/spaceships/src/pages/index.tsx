@@ -1,7 +1,7 @@
-import Filters from "@/components/Filters";
-import SpaceshipsTable from "@/components/SpaceshipsTable";
 import { Title } from "@/styles/styles";
 import useSpaceships from "@/hooks/useSpaceships";
+import SpaceshipsTable from "@/components/SpaceshipsTable";
+import SearchFilters from "@/components/SearchFilters";
 
 function Home() {
   const { spaceships, filters, setColors, setPulseLaser, setAverageSpeed } = useSpaceships();
@@ -9,7 +9,7 @@ function Home() {
   return (
     <main>
       <Title>Mr Little Z's Spaceships 🚀</Title>
-      <Filters
+      <SearchFilters
         filters={filters}
         setColors={setColors}
         setPulseLaser={setPulseLaser}
