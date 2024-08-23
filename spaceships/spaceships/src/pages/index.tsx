@@ -1,7 +1,7 @@
 import { Title } from "@/styles/styles";
 import useSpaceships from "@/hooks/useSpaceships";
 import SpaceshipsTable from "@/components/SpaceshipsTable";
-import SearchFilters from "@/components/SearchFilters";
+import { SearchFilters } from "@/components/SearchFilters";
 
 function Home() {
   const { spaceships, filters, setColors, setPulseLaser, setAverageSpeed } = useSpaceships();

@@ -1,9 +1,6 @@
-import ColorFilter from "./ColorFilter";
-import * as Styled from "./Filters.styled";
-import PulseLaserFilter from "./PulseLaserFilter";
 import { FC } from "react";
-import AverageSpeedFilter from "./AverageSpeedFilter";
-import { AverageSpeedFilterValue, Filters } from "@/utils/types";
+import { AverageSpeedFilterValue, Filters } from "@/components/SearchFilters/types";
+import { AverageSpeedFilter, ColorFilter, PulseLaserFilter, FiltersContainer } from "@/components/SearchFilters";
 
 interface Props {
   filters: Filters;
@@ -12,14 +9,10 @@ interface Props {
   setAverageSpeed: (filter: AverageSpeedFilterValue) => void;
 }
 
-const SearchFilters: FC<Props> = ({ filters, setPulseLaser, setColors, setAverageSpeed }) => {
-  return (
-    <Styled.FiltersContainer>
+export const SearchFilters: FC<Props> = ({ filters, setPulseLaser, setColors, setAverageSpeed }) => (
+    <FiltersContainer>
       <ColorFilter value={filters.colors} onChange={setColors} />
       <PulseLaserFilter value={filters.pulseLaser} onChange={setPulseLaser} />
       <AverageSpeedFilter value={filters.averageSpeed} onChange={setAverageSpeed} />
-    </Styled.FiltersContainer>
-  );
-};
-
-export default SearchFilters;
+    </FiltersContainer>
+);

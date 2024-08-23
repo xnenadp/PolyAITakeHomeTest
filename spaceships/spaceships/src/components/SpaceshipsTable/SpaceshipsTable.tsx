@@ -7,8 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CheckIcon from "@mui/icons-material/Check";
-import { Spaceship } from "@/utils/types";
 import * as Styled from "./SpaceshipsTable.styled";
+import { Spaceship } from "@/components/SpaceshipsTable/types";
 
 interface Props {
   rows: Spaceship[];
@@ -28,7 +28,7 @@ const SpaceshipsTable: FC<Props> = ({ rows }) => (
       <TableBody>
         {rows.map(({ name, average_speed, colors, pulse_laser }, index) => (
           <TableRow
-            key={`${name}-${index}`}
+            key={`spaceship-${name}-${index}`}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
           >
             <TableCell>{name}</TableCell>

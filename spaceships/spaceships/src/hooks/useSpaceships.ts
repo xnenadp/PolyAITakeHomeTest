@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import data from "@/assets/data.json";
-import { Filters, Spaceship } from "@/utils/types";
-import { FilterType, searchParamNames } from "@/utils/constants";
 import { useRouter } from "next/router";
+import { Filters, FilterType } from "@/components/SearchFilters/types";
+import { Spaceship } from "@/components/SpaceshipsTable/types";
+import { SearchParamNamesEnum } from "@/utils/constants";
+
 
 const defaultFilters: Filters = {
   colors: [],
@@ -64,21 +66,21 @@ const useSpaceships = () => {
     let params = new URLSearchParams();
 
     if (filters.colors.length) {
-      params.set(searchParamNames.COLORS, filters.colors.join(","));
+      params.set(SearchParamNamesEnum.COLORS, filters.colors.join(","));
     }
     if (filters.pulseLaser !== undefined) {
-      params.set(searchParamNames.PULSE_LASER, filters.pulseLaser.toString());
+      params.set(SearchParamNamesEnum.PULSE_LASER, filters.pulseLaser.toString());
     }
     if (filters.averageSpeed.type !== FilterType.None) {
       const { type, minValue, maxValue } = filters.averageSpeed;
-      params.set(searchParamNames.AVERAGE_SPEED_TYPE, type);
+      params.set(SearchParamNamesEnum.AVERAGE_SPEED_TYPE, type);
       if (type === FilterType.Between) {
-        params.set(searchParamNames.AVERAGE_SPEED_MIN, minValue.toString());
-        params.set(searchParamNames.AVERAGE_SPEED_MAX, maxValue.toString());
+        params.set(SearchParamNamesEnum.AVERAGE_SPEED_MIN, minValue.toString());
+        params.set(SearchParamNamesEnum.AVERAGE_SPEED_MAX, maxValue.toString());
       } else if (type === FilterType.LessThan) {
-        params.set(searchParamNames.AVERAGE_SPEED_MAX, maxValue.toString());
+        params.set(SearchParamNamesEnum.AVERAGE_SPEED_MAX, maxValue.toString());
       } else if (type === FilterType.GreaterThan) {
-        params.set(searchParamNames.AVERAGE_SPEED_MIN, minValue.toString());
+        params.set(SearchParamNamesEnum.AVERAGE_SPEED_MIN, minValue.toString());
       }
     }
 

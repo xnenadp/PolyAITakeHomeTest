@@ -1,13 +1,13 @@
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FC } from "react";
-import * as Styled from "../Filters.styled";
+import * as Styled from "../SearchFilters.styled";
 
 interface Props {
   value?: boolean;
   onChange: (value?: boolean) => void;
 }
 
-const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
+export const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
   const handleChange = (e: SelectChangeEvent<string>) => {
     const newValue = e.target.value;
     onChange(newValue === "" ? undefined : newValue === "true");
@@ -31,5 +31,3 @@ const PulseLaserFilter: FC<Props> = ({ value, onChange }) => {
     </Styled.FilterContainer>
   );
 };
-
-export default PulseLaserFilter;

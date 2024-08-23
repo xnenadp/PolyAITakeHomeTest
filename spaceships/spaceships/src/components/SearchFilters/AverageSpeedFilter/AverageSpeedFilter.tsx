@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react";
-import { FilterType } from "@/utils/constants";
-import * as Styled from "./AverageSpeedFilter.styled";
-import { AverageSpeedFilterValue } from "@/utils/types";
+import { FC, useMemo, useState } from "react";
+import { Fields, FilterContainer, FormLabel, Input, MinMaxContainer, Select, Type } from "@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter.styled";
+import { AverageSpeedFilterValue, FilterType } from "@/components/SearchFilters/types";
 
-interface Props {
+interface AverageSpeedFilterProps {
   value: AverageSpeedFilterValue;
   onChange: (filter: AverageSpeedFilterValue) => void;
 }
@@ -13,12 +12,8 @@ enum FilterField {
   Max = "maxValue",
 }
 
-const AverageSpeedFilter: FC<Props> = ({ value, onChange }) => {
+export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChange }) => {
   const [filter, setFilter] = useState<AverageSpeedFilterValue>(value);
-
-  useEffect(() => {
-    setFilter(value);
-  }, [value]);
 
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value as FilterType;
@@ -36,35 +31,35 @@ const AverageSpeedFilter: FC<Props> = ({ value, onChange }) => {
     }
   };
 
-  const renderMinMaxFields = () => {
+  const renderMinMaxFields = useMemo(() => {
     if (filter.type === FilterType.Between) {
       return (
-        <Styled.MinMaxContainer>
-            <Styled.FormLabel htmlFor="minSpeed">Min</Styled.FormLabel>
-            <Styled.Input
+        <MinMaxContainer>
+            <FormLabel htmlFor="minSpeed">Min</FormLabel>
+            <Input
               id="minSpeed"
               type="number"
               value={filter.minValue}
               onChange={handleValueChange(FilterField.Min)}
             />
-            <Styled.FormLabel htmlFor="maxSpeed">Max</Styled.FormLabel>
-            <Styled.Input
+            <FormLabel htmlFor="maxSpeed">Max</FormLabel>
+            <Input
               id="maxSpeed"
               type="number"
               value={filter.maxValue}
               onChange={handleValueChange(FilterField.Max)}
             />
-        </Styled.MinMaxContainer>
+        </MinMaxContainer>
       );
     }
 
     const isLessThan = filter.type === FilterType.LessThan;
     return (
       <>
-        <Styled.FormLabel htmlFor={isLessThan ? "maxSpeed" : "minSpeed"}>
+        <FormLabel htmlFor={isLessThan ? "maxSpeed" : "minSpeed"}>
           {isLessThan ? "Max" : "Min"}
-        </Styled.FormLabel>
-        <Styled.Input
+        </FormLabel>
+        <Input
           id={isLessThan ? "maxSpeed" : "minSpeed"}
           type="number"
           value={isLessThan ? filter.maxValue : filter.minValue}
@@ -72,13 +67,13 @@ const AverageSpeedFilter: FC<Props> = ({ value, onChange }) => {
         />
       </>
     );
-  };
+  }, [filter.type, handleValueChange])
 
   return (
-    <Styled.FilterContainer>
-      <Styled.Type>
-        <Styled.FormLabel>Average Speed</Styled.FormLabel>
-        <Styled.Select
+    <FilterContainer>
+      <Type>
+        <FormLabel>Average Speed</FormLabel>
+        <Select
           id="speed-filter"
           value={filter.type}
           onChange={handleTypeChange}
@@ -88,11 +83,9 @@ const AverageSpeedFilter: FC<Props> = ({ value, onChange }) => {
           <option value={FilterType.LessThan}>Less Than</option>
           <option value={FilterType.GreaterThan}>Greater Than</option>
           <option value={FilterType.Between}>Between</option>
-        </Styled.Select>
-      </Styled.Type>
-      {filter.type !== FilterType.None && <Styled.Fields>{renderMinMaxFields()}</Styled.Fields>}
-    </Styled.FilterContainer>
+        </Select>
+      </Type>
+      {filter.type !== FilterType.None && <Fields>{renderMinMaxFields}</Fields>}
+    </FilterContainer>
   );
 };
-
-export default AverageSpeedFilter;
