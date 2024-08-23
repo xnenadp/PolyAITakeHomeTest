@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { FilterContainer } from "@/components/SearchFilters";
-import { colors } from "@/components/SearchFilters/ColorFilter/constants";
+import { Colors } from "@/components/SearchFilters/ColorFilter/constants";
 
 interface ColorFilterProps {
   value: string[];
@@ -24,7 +24,7 @@ export const ColorFilter: FC<ColorFilterProps> = ({ value, onChange }) => {
         onChange={handleChange}
         sx={{ width: "200px", height: "40px" }}
       >
-        {colors.map(({ value, label }) => (
+        {Colors.map(({ value, label }) => (
           <MenuItem
             key={value}
             value={value}

@@ -1,4 +1,4 @@
-export const colors = [
+export const Colors = [
   { label: "Blue", value: "blue" },
   { label: "Silver", value: "silver" },
   { label: "Red", value: "red" },

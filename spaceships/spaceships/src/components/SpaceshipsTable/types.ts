@@ -11,5 +11,4 @@ export enum SearchParamNamesEnum {
   AverageSpeedType = "averageSpeedType",
   AverageSpeedMax = "averageSpeedMax",
   AverageSpeedMin = "averageSpeedMin",
-  AverageSpeedValue = "averageSpeedValue",
 };
