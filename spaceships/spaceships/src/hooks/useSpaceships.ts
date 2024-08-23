@@ -16,7 +16,6 @@ export const useSpaceships = () => {
 
   const router = useRouter();
 
-  // Kreira novu funkciju samo kad se promene parametri ne pri svakom rirenderovanju
   const filterSpaceships = useCallback(({
     spaceships,
     filters,

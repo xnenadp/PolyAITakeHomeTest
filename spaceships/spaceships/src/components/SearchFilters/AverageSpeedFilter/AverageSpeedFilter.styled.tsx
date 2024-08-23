@@ -24,7 +24,7 @@ export const FormLabel = styled.label`
   margin-bottom: 8px;
   font-weight: 400;
   padding-right: 10px;
-  color: rgba(0, 0, 0, 0.6); // Adjusted to match user preference
+  color: rgba(0, 0, 0, 0.6);
   transition: color 0.3s ease;
 `;
 
