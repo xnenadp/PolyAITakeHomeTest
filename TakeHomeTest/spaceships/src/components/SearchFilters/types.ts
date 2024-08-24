@@ -1,7 +1,7 @@
 export interface AverageSpeedFilterValue {
   type: FilterTypeEnum;
-  minValue: number;
-  maxValue: number;
+  minValue: string;
+  maxValue: string;
 }
 
 export interface Filters {
