@@ -12,26 +12,35 @@ enum FilterFieldEnum {
   Max = "maxValue",
 }
 
-export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChange }) => {
+export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({
+  value,
+  onChange,
+}) => {
   const [filter, setFilter] = useState<AverageSpeedFilterValue>(value);
 
-  const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newType = e.target.value as FilterTypeEnum;
-    const updatedFilter = { type: newType, minValue: "", maxValue: "" };
-    setFilter(updatedFilter);
-    onChange(updatedFilter);
-  }, [filter.type, onChange]);
-
-  const handleValueChange = useCallback((field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    if (value === "" || !isNaN(Number(value))) {
-      const newValue = value === "" ? "" : Number(value);
-      const updatedFilter = { ...filter, [field]: newValue };
+  const handleTypeChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const newType = e.target.value as FilterTypeEnum;
+      const updatedFilter = { type: newType, minValue: "", maxValue: "" };
       setFilter(updatedFilter);
       onChange(updatedFilter);
-    }
-  }, [filter.maxValue, filter.minValue, onChange]);
+    },
+    [onChange]
+  );
+
+  const handleValueChange = useCallback(
+    (field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+
+      if (value === "" || !isNaN(Number(value))) {
+        const newValue = value === "" ? "" : Number(value);
+        const updatedFilter = { ...filter, [field]: newValue };
+        setFilter(updatedFilter);
+        onChange(updatedFilter);
+      }
+    },
+    [filter, onChange]
+  );
 
   const renderMinMaxFields = useMemo(() => {
     if (filter.type === FilterTypeEnum.Between) {
@@ -60,10 +69,12 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
         id={isLessThan ? "maxSpeed" : "minSpeed"}
         type="text"
         value={isLessThan ? filter.maxValue : filter.minValue}
-        onChange={handleValueChange(isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min)}
+        onChange={handleValueChange(
+          isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min
+        )}
       />
     );
-  }, [filter.type, handleValueChange])
+  }, [filter.maxValue, filter.minValue, filter.type, handleValueChange]);
 
   return (
     <FilterContainer>
@@ -81,7 +92,9 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
           <option value={FilterTypeEnum.Between}>Between</option>
         </Select>
       </Type>
-      {filter.type !== FilterTypeEnum.None && <Fields>{renderMinMaxFields}</Fields>}
+      {filter.type !== FilterTypeEnum.None && (
+        <Fields>{renderMinMaxFields}</Fields>
+      )}
     </FilterContainer>
   );
 };
