@@ -7,8 +7,6 @@ export const FiltersContainer = styled.div`
   align-items: center;
   margin: 10px;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
   background-color: #fff;
   flex-wrap: wrap;
   justify-content: center;

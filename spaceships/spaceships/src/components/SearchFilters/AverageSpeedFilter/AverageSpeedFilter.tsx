@@ -25,10 +25,10 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
   const handleValueChange = useCallback((field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     if (!isNaN(newValue)) {
-    const updatedFilter = { ...filter, [field]: newValue };
-    setFilter(updatedFilter);
-    onChange(updatedFilter);
-  }
+      const updatedFilter = { ...filter, [field]: newValue };
+      setFilter(updatedFilter);
+      onChange(updatedFilter);
+    }
   }, [filter.maxValue, filter.minValue, onChange]);
 
   const renderMinMaxFields = useMemo(() => {
