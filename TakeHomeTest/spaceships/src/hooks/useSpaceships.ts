@@ -116,23 +116,23 @@ export const useSpaceships = () => {
       averageSpeedMin,
       averageSpeedMax,
     } = router.query;
-  
+
     const newFilters: Filters = { ...defaultFilters };
-  
+
     const parseValue = (value: string, fallback: string = "") =>
       value === "" || !isNaN(Number(value)) ? value : fallback;
-  
+
     if (colors) {
       newFilters.colors = (colors as string).split(",");
     }
-  
+
     if (pulseLaser) {
       newFilters.pulseLaser = pulseLaser === "true";
     }
-  
+
     if (averageSpeedType) {
       newFilters.averageSpeed.type = averageSpeedType as FilterTypeEnum;
-  
+
       switch (averageSpeedType) {
         case FilterTypeEnum.Between:
           newFilters.averageSpeed.minValue = parseValue(
@@ -153,15 +153,16 @@ export const useSpaceships = () => {
           );
           break;
         default:
+          newFilters.averageSpeed.type = FilterTypeEnum.None;
           break;
       }
     } else {
       newFilters.averageSpeed.type = FilterTypeEnum.None;
     }
-  
+
     setFilters(newFilters);
     setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
-  }, [router.query]);  
+  }, [router.query]);
 
   return {
     spaceships,

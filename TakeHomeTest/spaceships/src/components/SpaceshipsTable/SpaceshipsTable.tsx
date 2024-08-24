@@ -17,7 +17,7 @@ interface SpaceshipsTableProps {
 export const SpaceshipsTable: FC<SpaceshipsTableProps> = ({ rows }) => (
   <SpaceshipsTableContainer>
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650, width: "100%"}} aria-label="simple table">
+      <Table sx={{ minWidth: 650, width: "100%" }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>

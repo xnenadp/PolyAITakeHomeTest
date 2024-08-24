@@ -17,14 +17,14 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
 
   const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value as FilterTypeEnum;
-    const updatedFilter = { type: newType,  minValue: "", maxValue: ""};
+    const updatedFilter = { type: newType, minValue: "", maxValue: "" };
     setFilter(updatedFilter);
     onChange(updatedFilter);
   }, [filter.type, onChange]);
 
   const handleValueChange = useCallback((field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-  
+
     if (value === "" || !isNaN(Number(value))) {
       const newValue = value === "" ? "" : Number(value);
       const updatedFilter = { ...filter, [field]: newValue };
@@ -56,14 +56,12 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
 
     const isLessThan = filter.type === FilterTypeEnum.LessThan;
     return (
-      <>
-        <Input
-          id={isLessThan ? "maxSpeed" : "minSpeed"}
-          type="text"
-          value={isLessThan ? filter.maxValue : filter.minValue}
-          onChange={handleValueChange(isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min)}
-        />
-      </>
+      <Input
+        id={isLessThan ? "maxSpeed" : "minSpeed"}
+        type="text"
+        value={isLessThan ? filter.maxValue : filter.minValue}
+        onChange={handleValueChange(isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min)}
+      />
     );
   }, [filter.type, handleValueChange])
 
