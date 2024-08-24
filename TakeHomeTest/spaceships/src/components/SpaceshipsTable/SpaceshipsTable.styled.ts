@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const SpaceshipsTableContainer = styled.div`
   padding: 32px;
+  width 100%;
 `;
 
 export const ColorTileContainer = styled.div`

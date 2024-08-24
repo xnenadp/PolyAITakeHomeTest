@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const FilterContainer = styled.div`
   display: flex;
-  flex-direction: column;
   padding: 20px;
   background-color: #fff;
 `;
@@ -24,6 +23,13 @@ export const FormLabel = styled.label`
   margin-bottom: 8px;
   font-weight: 400;
   padding-right: 10px;
+  color: rgba(0, 0, 0, 0.6);
+  transition: color 0.3s ease;
+`;
+
+export const Separator = styled.div`
+  margin-bottom: 8px;
+  font-weight: 400;
   color: rgba(0, 0, 0, 0.6);
   transition: color 0.3s ease;
 `;
@@ -55,8 +61,8 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  width: 100px;
-  margin-right: 8px;
+  width: 60px;
+  height: 40px;
   outline: none;
 
   &:focus {
@@ -67,5 +73,6 @@ export const Input = styled.input`
 
 export const MinMaxContainer = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 5px;
+  align-items: center;
 `;

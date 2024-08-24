@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useState } from "react";
-import { Fields, FilterContainer, FormLabel, Input, MinMaxContainer, Select, Type } from "@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter.styled";
+import { Fields, FilterContainer, FormLabel, Input, MinMaxContainer, Select, Separator, Type } from "@/components/SearchFilters/AverageSpeedFilter/AverageSpeedFilter.styled";
 import { AverageSpeedFilterValue, FilterTypeEnum } from "@/components/SearchFilters/types";
 
 interface AverageSpeedFilterProps {
@@ -17,14 +17,16 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
 
   const handleTypeChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = e.target.value as FilterTypeEnum;
-    const updatedFilter = { ...filter, type: newType };
+    const updatedFilter = { type: newType,  minValue: "", maxValue: ""};
     setFilter(updatedFilter);
     onChange(updatedFilter);
   }, [filter.type, onChange]);
 
   const handleValueChange = useCallback((field: FilterFieldEnum) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = Number(e.target.value);
-    if (!isNaN(newValue)) {
+    const { value } = e.target;
+  
+    if (value === "" || !isNaN(Number(value))) {
+      const newValue = value === "" ? "" : Number(value);
       const updatedFilter = { ...filter, [field]: newValue };
       setFilter(updatedFilter);
       onChange(updatedFilter);
@@ -35,17 +37,16 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
     if (filter.type === FilterTypeEnum.Between) {
       return (
         <MinMaxContainer>
-          <FormLabel htmlFor="minSpeed">Min</FormLabel>
           <Input
             id="minSpeed"
-            type="number"
+            type="text"
             value={filter.minValue}
             onChange={handleValueChange(FilterFieldEnum.Min)}
           />
-          <FormLabel htmlFor="maxSpeed">Max</FormLabel>
+          <Separator>-</Separator>
           <Input
             id="maxSpeed"
-            type="number"
+            type="text"
             value={filter.maxValue}
             onChange={handleValueChange(FilterFieldEnum.Max)}
           />
@@ -56,12 +57,9 @@ export const AverageSpeedFilter: FC<AverageSpeedFilterProps> = ({ value, onChang
     const isLessThan = filter.type === FilterTypeEnum.LessThan;
     return (
       <>
-        <FormLabel htmlFor={isLessThan ? "maxSpeed" : "minSpeed"}>
-          {isLessThan ? "Max" : "Min"}
-        </FormLabel>
         <Input
           id={isLessThan ? "maxSpeed" : "minSpeed"}
-          type="number"
+          type="text"
           value={isLessThan ? filter.maxValue : filter.minValue}
           onChange={handleValueChange(isLessThan ? FilterFieldEnum.Max : FilterFieldEnum.Min)}
         />
