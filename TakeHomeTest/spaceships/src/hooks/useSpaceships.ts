@@ -16,97 +16,118 @@ export const useSpaceships = () => {
 
   const router = useRouter();
 
-  const filterSpaceships = useCallback(({
-    spaceships,
-    filters,
-  }: {
-    spaceships: Spaceship[];
-    filters: Filters;
-  }) => {
-    let newSpaceships = [...spaceships];
+  const filterSpaceships = useCallback(
+    ({
+      spaceships,
+      filters,
+    }: {
+      spaceships: Spaceship[];
+      filters: Filters;
+    }) => {
+      let newSpaceships = [...spaceships];
 
-    newSpaceships = newSpaceships.filter((spaceship) => {
-      return filters.colors.length
-        ? spaceship.colors.some((color) => filters.colors.includes(color))
-        : true;
-    });
-
-    newSpaceships = newSpaceships.filter((spaceship) => {
-      return filters.pulseLaser !== undefined
-        ? filters.pulseLaser === spaceship.pulse_laser
-        : true;
-    });
-
-    if (filters.averageSpeed.type !== FilterTypeEnum.None) {
-      const { type, minValue, maxValue } = filters.averageSpeed;
       newSpaceships = newSpaceships.filter((spaceship) => {
-        const speed = Number(spaceship.average_speed);
-        if (type === FilterTypeEnum.LessThan) {
-          return maxValue === "" ? true : speed < Number(maxValue);
-        } else if (type === FilterTypeEnum.GreaterThan) {
-          return minValue === "" ? true : speed > Number(minValue);
-        } else if (type === FilterTypeEnum.Between) {
-          return (maxValue === "" ? true : speed < Number(maxValue)) && (minValue === "" ? true : speed > Number(minValue));
-        }
-
-        return true;
+        return filters.colors.length
+          ? spaceship.colors.some((color) => filters.colors.includes(color))
+          : true;
       });
-    }
 
-    return newSpaceships;
-  }, [spaceships, filters]);
+      newSpaceships = newSpaceships.filter((spaceship) => {
+        return filters.pulseLaser !== undefined
+          ? filters.pulseLaser === spaceship.pulse_laser
+          : true;
+      });
 
-  const setQueryParams = useCallback((filters: Filters) => {
-    let params = new URLSearchParams();
+      if (filters.averageSpeed.type !== FilterTypeEnum.None) {
+        const { type, minValue, maxValue } = filters.averageSpeed;
+        newSpaceships = newSpaceships.filter((spaceship) => {
+          const speed = Number(spaceship.average_speed);
+          if (type === FilterTypeEnum.LessThan) {
+            return maxValue === "" ? true : speed < Number(maxValue);
+          } else if (type === FilterTypeEnum.GreaterThan) {
+            return minValue === "" ? true : speed > Number(minValue);
+          } else if (type === FilterTypeEnum.Between) {
+            return (
+              (maxValue === "" ? true : speed < Number(maxValue)) &&
+              (minValue === "" ? true : speed > Number(minValue))
+            );
+          }
 
-    if (filters.colors.length) {
-      params.set(SearchParamNamesEnum.Colors, filters.colors.join(","));
-    }
-    if (filters.pulseLaser !== undefined) {
-      params.set(SearchParamNamesEnum.PulseLaser, filters.pulseLaser.toString());
-    }
-    if (filters.averageSpeed.type !== FilterTypeEnum.None) {
-      const { type, minValue, maxValue } = filters.averageSpeed;
-      params.set(SearchParamNamesEnum.AverageSpeedType, type);
-      if (type === FilterTypeEnum.Between) {
-        params.set(SearchParamNamesEnum.AverageSpeedMin, minValue);
-        params.set(SearchParamNamesEnum.AverageSpeedMax, maxValue);
-      } else if (type === FilterTypeEnum.LessThan) {
-        params.set(SearchParamNamesEnum.AverageSpeedMax, maxValue);
-      } else if (type === FilterTypeEnum.GreaterThan) {
-        params.set(SearchParamNamesEnum.AverageSpeedMin, minValue);
+          return true;
+        });
       }
-    }
-    const paramsString = params.toString();
-    router.replace(paramsString !== "" ? `?${paramsString}` : "");
-  }, [router]);
 
-  const setColors = useCallback((colors: string[]) => {
-    const newFilters = {
-      ...filters,
-      colors,
-    };
-    setFilters(newFilters);
-    setQueryParams(newFilters);
-  }, [filters]);
+      return newSpaceships;
+    },
+    []
+  );
 
-  const setPulseLaser = useCallback((pulseLaser?: boolean) => {
-    const newFilters = {
-      ...filters,
-      pulseLaser,
-    };
-    setFilters(newFilters);
-    setQueryParams(newFilters);
-  }, [filters]);
+  const setQueryParams = useCallback(
+    (filters: Filters) => {
+      let params = new URLSearchParams();
 
-  const setAverageSpeed = useCallback((averageSpeed: AverageSpeedFilterValue) => {
-    const newFilters = {
-      ...filters,
-      averageSpeed,
-    };
-    setFilters(newFilters);
-    setQueryParams(newFilters);
-  }, [filters]);
+      if (filters.colors.length) {
+        params.set(SearchParamNamesEnum.Colors, filters.colors.join(","));
+      }
+      if (filters.pulseLaser !== undefined) {
+        params.set(
+          SearchParamNamesEnum.PulseLaser,
+          filters.pulseLaser.toString()
+        );
+      }
+      if (filters.averageSpeed.type !== FilterTypeEnum.None) {
+        const { type, minValue, maxValue } = filters.averageSpeed;
+        params.set(SearchParamNamesEnum.AverageSpeedType, type);
+        if (type === FilterTypeEnum.Between) {
+          params.set(SearchParamNamesEnum.AverageSpeedMin, minValue);
+          params.set(SearchParamNamesEnum.AverageSpeedMax, maxValue);
+        } else if (type === FilterTypeEnum.LessThan) {
+          params.set(SearchParamNamesEnum.AverageSpeedMax, maxValue);
+        } else if (type === FilterTypeEnum.GreaterThan) {
+          params.set(SearchParamNamesEnum.AverageSpeedMin, minValue);
+        }
+      }
+      const paramsString = params.toString();
+      router.replace(paramsString !== "" ? `?${paramsString}` : "");
+    },
+    [router]
+  );
+
+  const setColors = useCallback(
+    (colors: string[]) => {
+      const newFilters = {
+        ...filters,
+        colors,
+      };
+      setFilters(newFilters);
+      setQueryParams(newFilters);
+    },
+    [filters, setQueryParams]
+  );
+
+  const setPulseLaser = useCallback(
+    (pulseLaser?: boolean) => {
+      const newFilters = {
+        ...filters,
+        pulseLaser,
+      };
+      setFilters(newFilters);
+      setQueryParams(newFilters);
+    },
+    [filters, setQueryParams]
+  );
+
+  const setAverageSpeed = useCallback(
+    (averageSpeed: AverageSpeedFilterValue) => {
+      const newFilters = {
+        ...filters,
+        averageSpeed,
+      };
+      setFilters(newFilters);
+      setQueryParams(newFilters);
+    },
+    [filters, setQueryParams]
+  );
 
   useEffect(() => {
     const {
@@ -116,23 +137,23 @@ export const useSpaceships = () => {
       averageSpeedMin,
       averageSpeedMax,
     } = router.query;
-  
+
     const newFilters: Filters = { ...defaultFilters };
-  
+
     const parseValue = (value: string, fallback: string = "") =>
       value === "" || !isNaN(Number(value)) ? value : fallback;
-  
+
     if (colors) {
       newFilters.colors = (colors as string).split(",");
     }
-  
+
     if (pulseLaser) {
       newFilters.pulseLaser = pulseLaser === "true";
     }
-  
+
     if (averageSpeedType) {
       newFilters.averageSpeed.type = averageSpeedType as FilterTypeEnum;
-  
+
       switch (averageSpeedType) {
         case FilterTypeEnum.Between:
           newFilters.averageSpeed.minValue = parseValue(
@@ -153,15 +174,16 @@ export const useSpaceships = () => {
           );
           break;
         default:
+          newFilters.averageSpeed.type = FilterTypeEnum.None;
           break;
       }
     } else {
       newFilters.averageSpeed.type = FilterTypeEnum.None;
     }
-  
+
     setFilters(newFilters);
     setSpaceships(filterSpaceships({ spaceships: data, filters: newFilters }));
-  }, [router.query]);  
+  }, [filterSpaceships, router]);
 
   return {
     spaceships,
