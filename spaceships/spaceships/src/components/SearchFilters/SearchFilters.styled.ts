@@ -1,16 +1,21 @@
 import styled from "styled-components";
 
 export const FiltersContainer = styled.div`
+  min-height: 200px;
   display: flex;
-  width: 100%;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 32px;
+  margin: 10px;
   padding: 20px;
+  background-color: #fff;
+  flex-wrap: wrap;
+  justify-content: center;
 `;
 
 export const FilterContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 8px;
+  padding: 20px;
 `;

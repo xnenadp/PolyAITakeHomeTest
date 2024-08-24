@@ -1,0 +1,1 @@
+export { SpaceshipsTable } from '@/components/SpaceshipsTable/SpaceshipsTable';
